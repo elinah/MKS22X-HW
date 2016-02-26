@@ -23,18 +23,25 @@ public class Maze{
         //COMPLETE CONSTRUCTOR
 	try {
 	    Scanner in = new Scanner(new File(filename));
+	    int row = 0;
+	    int col = 0;
+	    String s = "";
+	    while(in.hasNextLine()){
+		row += 1;
+		while(in.hasNext()){
+		    col += 1;
+		}
+		s += in.nextLine() + " ";
+	    }
+	    maze = new char[row][col];
+	    for(int i = 0;i < maze.length;i++){
+		for(int j = 0;j < maze[0].length;j++){
+		    maze[i][j] = s.charAt(i*col+j);
+		}
+	    }
 	} catch (FileNotFoundException e) {
 	    System.out.println("File not found");
 	}
-	int row = 0;
-	int col = 0;
-	while(in.hasNextLine){
-	    row += 1;
-	    while(in.hasNext){
-		col += 1;
-	    }
-	}
-	row += 1;
 	ani = animate;
     }
 
