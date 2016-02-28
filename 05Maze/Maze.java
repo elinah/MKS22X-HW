@@ -21,28 +21,36 @@ public class Maze{
     */
     public Maze(String filename, boolean ani){
         //COMPLETE CONSTRUCTOR
+	startx = -1;
+	starty = -1;
 	try {
 	    Scanner in = new Scanner(new File(filename));
-	    int row = 0;
+	    int row = 1;
 	    int col = 0;
 	    String s = "";
+	    s = in.nextLine();
+	    for(int i = 0;i < s.length();i++){
+		col += 1;
+	    }
 	    while(in.hasNextLine()){
 		row += 1;
-		while(in.hasNext()){
-		    col += 1;
-		}
-		s += in.nextLine() + " ";
+		s += in.nextLine();
 	    }
-	    maze = new char[row][col];
-	    for(int i = 0;i < maze.length;i++){
-		for(int j = 0;j < maze[0].length;j++){
-		    maze[i][j] = s.charAt(i*col+j);
+	    maze = new char[col][row];
+	    for(int i = 0;i < col;i++){
+		for(int j = 0;j < row;j++){
+		    char c = s.charAt(j*col+i);
+		    maze[i][j] = c;
+		    if(c == 'S'){
+			startx = i;
+			starty = j;
+		    }
 		}
 	    }
 	} catch (FileNotFoundException e) {
 	    System.out.println("File not found");
 	}
-	ani = animate;
+	animate = ani;
     }
 
 
@@ -80,11 +88,18 @@ public class Maze{
             System.out.println(this);
             wait(20);
         }
-
-        //COMPLETE SOLVE
-
-        return false; //so it compiles
-    }
+	if(maze[x][y] == 'E')
+	    return true;
+	if(maze[x][y] != ' ')
+	    return false;
+	maze[x][y] = '@';
+	if(solve(x+1,y) || solve(x,y+1) || solve(x,y-1) || solve(x-1,y)){
+	    return true;
+	} else {
+	    maze[x][y] = '.';
+	    return false;
+	}
+    }	
 
 
 
@@ -144,10 +159,21 @@ public class Maze{
         }
     }
 
-    
+
 
     //END FREE STUFF
-
-
+    
+    /*public void print(){
+	for(int i = 0;i < maze.length;i++){
+	    for(int j = 0;j < maze[0].length;j++){
+		System.out.print(maze[i][j]);
+	    }
+	    System.out.println();
+	}
+    }
+    public static void main(String[] args){
+	Maze a = new Maze("data2.dat",false);
+        a.print();
+	}*/
 
 }
