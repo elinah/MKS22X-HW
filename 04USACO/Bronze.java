@@ -9,7 +9,7 @@ public class Bronze{
 	
     public Bronze(){
 	try {
-	    in = new Scanner(new File("makelake.in.txt"));
+	    in = new Scanner(new File("makelake.in"));
 	} catch (FileNotFoundException e){
 	    System.out.println("File not found");
 	}
