@@ -8,7 +8,7 @@ public class Silver{
 
     public Silver(){
 	try {
-	    in = new Scanner(new File("ctravel.in.txt"));
+	    in = new Scanner(new File("ctravel.in"));
 	    row = in.nextInt();
 	    col = in.nextInt();
 	    steps = in.nextInt();
