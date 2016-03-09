@@ -39,7 +39,7 @@ public class Quick{
 	return quickselect(data,k,0,data.length-1);
     }
     
-    public static int quickselect(int[] data, int k, int left, int right){
+    private static int quickselect(int[] data, int k, int left, int right){
 	int part = partition(data,left,right);
 	if (k != part){
 	    if (k < part){
