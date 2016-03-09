@@ -2,6 +2,10 @@ import java.util.*;
 
 public class Quick{
 
+    public static String name(){
+	return "7,Hvirtsman,Elina";
+    }
+
     private static int partition(int[] data, int left, int right){
 	int part = (int)(left + (Math.random() * (right-left+1)));
 	int temp = data[right];
