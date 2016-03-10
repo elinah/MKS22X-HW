@@ -55,13 +55,26 @@ public class Quick{
 	return data[part];
     }
 
+    public static void quickSort(int[] data){
+	quickSort(data,0,data.length-1);
+    }
+
+    private static void quickSort(int[] data, int left, int right){
+	if (right - left > 0){
+	    int part = partition(data,left,right);
+	    quickSort(data,left,part - 1);
+	    quickSort(data,part + 1,right);
+	}
+    }
+
 		
     public static void main(String[] args){
 	Quick a = new Quick();
 	int[] ary = {16,48,1,23,56,45};
-	System.out.println(a.quickselect(ary,0));
+	a.quickSort(ary);
+	//System.out.println(a.quickselect(ary,0));
 	//System.out.println(a.partition(ary,0,13));
-	//System.out.println(Arrays.toString(ary));
+	System.out.println(Arrays.toString(ary));
     }
 }
 	
