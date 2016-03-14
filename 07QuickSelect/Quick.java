@@ -74,9 +74,8 @@ public class Quick{
 	    retAry[1] = right;
 	} else {
 	    int part = (int)(left + (Math.random() * (right-left+1)));
-	    //int[] tempAry = new int[data.length];
-	    int start = left;
-	    int end = right;
+	    int start = 0;
+	    int end = tempAry.length-1;
 	    for(int i = left;i < right+1;i++){
 		if (data[i] < data[part]){
 		    tempAry[start] = data[i];
@@ -86,20 +85,17 @@ public class Quick{
 		    end--;
 		}
 	    }
-	    //System.out.println("tempAry: " + Arrays.toString(tempAry));
-	    int retLeft = start;
+	    int retLeft = start+left;
 	    while (start <= end){
 		tempAry[start] = data[part];
 		start++;
 	    }
 	    for(int i = left;i < right+1;i++){
-		data[i] = tempAry[i];
+		data[i] = tempAry[i-left];
 	    }
-	    //System.out.println("data: " + Arrays.toString(data));
 	    retAry[0] = retLeft;
-	    retAry[1] = end;
+	    retAry[1] = end+left;
 	}
-	//System.out.println("retAry: " + Arrays.toString(retAry));
 	return retAry;
     }
 
@@ -108,7 +104,7 @@ public class Quick{
     }
     
     private static int quickSelect(int[] data, int k, int left, int right){
-	int[] tempAry = new int[data.length];
+	int[] tempAry = new int[right-left+1];
 	int[] part = partition(data,tempAry,left,right);
 	if (k != part[0]){
 	    if (k < part[0]){
@@ -126,7 +122,7 @@ public class Quick{
 
     private static void quickSort(int[] data, int left, int right){
 	if (right - left > 0){
-	    int[] tempAry = new int[data.length];
+	    int[] tempAry = new int[right-left+1];
 	    int[] part = partition(data,tempAry,left,right);
 	    quickSort(data,left,part[0] - 1);
 	    quickSort(data,part[1] + 1,right);
@@ -135,12 +131,12 @@ public class Quick{
 
 		
     public static void main(String[] args){
-	//int[] ary = {16,23,48,1,23,56,23,45,23,23,23,23,23,23,23,23};
+	//int[] ary = {16,23,48,1,23,56,23,45};
 	//quickSort(ary);
 	//System.out.println(quickselect(ary,0));
 	//System.out.println(partition(ary,0,13));
 	//System.out.println(Arrays.toString(ary));
-        int[] d = new int [4000000];
+	/*int[] d = new int [4000000];
 	int[] c = new int [d.length];
 
 	for(int i = 0; i < d.length; i++){
@@ -150,7 +146,22 @@ public class Quick{
 	quickSort(d); //or even your old quicksort!!!
 	Arrays.sort(c);
 	System.out.println("Done: Sorted="+Arrays.equals(d,c));
-	
+	*/
+	int[] a = new int[4000000];
+	for(int i = 0;i < a.length;i++){
+	    a[i]= (int)(Math.random()*4);
+	}
+	Arrays.sort(a);
+	quickSortOld(a);
+	quickSort(a);
+
+	int[] b = new int[4000000];
+	for(int i = 0;i < b.length;i++){
+	    b[i]= (int)(Math.random()*Integer.MAX_VALUE);
+	}
+	Arrays.sort(b);
+	quickSortOld(b);
+	quickSort(b);
     }
 }
 	
