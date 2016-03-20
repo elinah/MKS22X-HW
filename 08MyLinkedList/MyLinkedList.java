@@ -1,6 +1,6 @@
 public class MyLinkedList{
 
-    private LNode start;
+    private LNode start,end;
     private int size;
 
     public MyLinkedList(){
@@ -51,6 +51,9 @@ public class MyLinkedList{
 	    }
 	    val = current.getNext().getValue();
 	    current.setNext(current.getNext().getNext());
+	    if (index == size-1){
+		end = current;
+	    }
 	}
 	size--;
 	return val;
@@ -60,12 +63,14 @@ public class MyLinkedList{
     private boolean add(int index, int value){
 	if (index == 0){
 	    start = new LNode(value,start);
-	} else if (index > 0 && index <= size){
+	} else if (index > 0 && index < size){
 	    LNode current = start;
 	    for(int i = 0;i < index-1;i++){
 		current = current.getNext();
 	    }
 	    current.setNext(new LNode(value,current.getNext()));
+	} else {
+	    return add(value);
 	}
 	size++;
 	return true;
@@ -75,12 +80,10 @@ public class MyLinkedList{
     private boolean add(int value){
 	if (size == 0){
 	    start = new LNode(value);
+	    end = start;
 	} else {
-	    LNode current = start;
-	    while (current.getNext() != null){
-		current = current.getNext();
-	    }
-	    current.setNext(new LNode(value));
+	    end.setNext(new LNode(value));
+	    end = end.getNext();
 	}
 	size++;
 	return true;
@@ -150,6 +153,7 @@ public class MyLinkedList{
 	a.add(0,2);
 	System.out.println(a);
 	a.add(1,7);
+	a.add(10);
 	System.out.println(a);
 	System.out.println(a.indexOf(7));
 	a.remove(0);
@@ -159,6 +163,8 @@ public class MyLinkedList{
 	System.out.println(a.indexOf(55));
 	System.out.println(a.get(1));
 	System.out.println(a.set(0,8));
+	System.out.println(a);
+	a.remove(2);
 	System.out.println(a);
     }
 }
