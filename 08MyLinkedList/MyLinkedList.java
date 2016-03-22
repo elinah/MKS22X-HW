@@ -1,4 +1,4 @@
-public class MyLinkedList{
+public class MyLinkedList<T>{
 
     private LNode start,end;
     private int size;
@@ -7,7 +7,7 @@ public class MyLinkedList{
     }
 
     //get the value of the element at the specified index (0 based)
-    private int get(int index){
+    private T get(int index){
 	LNode current = start;
 	for(int i = 0;i < size;i++){
 	    if (i == index){
@@ -15,12 +15,12 @@ public class MyLinkedList{
 	    }
 	    current = current.getNext();
 	}
-	return 0;
+	return null;
     }
 
     //change the value of the element at the specified index to the newValue, return the old value
-    private int set(int index,int newValue){
-	int val = 0;
+    private T set(int index,T newValue){
+	T val = null;
 	LNode current = start;
 	for(int i = 0;i < size;i++){
 	    if (i == index){
@@ -39,8 +39,8 @@ public class MyLinkedList{
     }
 
     //remove the element at the specified index, returns the value removed
-    private int remove(int index){
-	int val = 0;
+    private T remove(int index){
+	T val = null;
 	if (index == 0 && size > 0){
 	    val = start.getValue();
 	    start = start.getNext();  
@@ -60,7 +60,7 @@ public class MyLinkedList{
     }
 
     //insert a new elmeent at the specified index, 0 at the front, size() at the end.
-    private boolean add(int index, int value){
+    private boolean add(int index, T value){
 	if (index == 0){
 	    start = new LNode(value,start);
 	} else if (index > 0 && index < size){
@@ -77,7 +77,7 @@ public class MyLinkedList{
     }
 
     //adds to end
-    private boolean add(int value){
+    private boolean add(T value){
 	if (size == 0){
 	    start = new LNode(value);
 	    end = start;
@@ -90,10 +90,10 @@ public class MyLinkedList{
     }
 
     //returns the index of the 1st occurrence of the value in the linked list, -1 if not found.
-    private int indexOf(int value){
+    private int indexOf(T value){
 	LNode current = start;
 	for(int i = 0;i < size;i++){
-	    if (current.getValue() == value){
+	    if (current.getValue().equals(value)){
 		return i;
 	    }
 	    current = current.getNext();
@@ -117,22 +117,22 @@ public class MyLinkedList{
     } 
  
     private class LNode{
-	private int value;
+	private T value;
 	private LNode next;
 	
-	private LNode(int value){
+	private LNode(T value){
 	    this.value = value;
 	}
-	private LNode(int value, LNode next){
+	private LNode(T value, LNode next){
 	    this.value = value;
 	    this.next = next;
 	}
 
-	private int getValue(){
+	private T getValue(){
 	    return value;
 	}
 
-	private void setValue(int value){
+	private void setValue(T value){
 	    this.value = value;
 	}
 
@@ -146,25 +146,28 @@ public class MyLinkedList{
     }
 
     public static void main(String[] args){
-	MyLinkedList a = new MyLinkedList();
+	MyLinkedList<String> a = new MyLinkedList<String>();
 	System.out.println(a);
-	a.add(5);
+	a.add("hi");
 	System.out.println(a);
-	a.add(0,2);
+	a.add(0,"hey");
 	System.out.println(a);
-	a.add(1,7);
-	a.add(10);
+	a.add(1,"pie");
+	a.add("bye");
 	System.out.println(a);
-	System.out.println(a.indexOf(7));
+	System.out.println(a.indexOf("hey"));
 	a.remove(0);
 	System.out.println(a);
-	System.out.println(a.indexOf(7));
-	System.out.println(a.indexOf(5));
-	System.out.println(a.indexOf(55));
+	System.out.println(a.indexOf("hi"));
+	System.out.println(a.indexOf("bye"));
+	System.out.println(a.indexOf("pizza"));
 	System.out.println(a.get(1));
-	System.out.println(a.set(0,8));
+	System.out.println(a.set(0,"hello"));
 	System.out.println(a);
 	a.remove(2);
 	System.out.println(a);
+	MyLinkedList<Integer> b = new MyLinkedList<Integer>();
+	b.add(new Integer(5));
+	System.out.println(b);
     }
 }
