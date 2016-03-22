@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class MyLinkedList<T>{
 
     private LNode start,end;
@@ -8,29 +10,36 @@ public class MyLinkedList<T>{
 
     //get the value of the element at the specified index (0 based)
     private T get(int index){
-	LNode current = start;
-	for(int i = 0;i < size;i++){
-	    if (i == index){
-		return current.getValue();
+	try{
+	    LNode current = start;
+	    for(int i = 0;i < size;i++){
+		if (i == index){
+		    return current.getValue();
+		}
+		current = current.getNext();
 	    }
-	    current = current.getNext();
+	} catch(IndexOutOfBoundsException e){
+	    System.out.println("Index out of bound");
 	}
-	return null;
     }
 
     //change the value of the element at the specified index to the newValue, return the old value
     private T set(int index,T newValue){
-	T val = null;
-	LNode current = start;
-	for(int i = 0;i < size;i++){
-	    if (i == index){
-		val = current.getValue();
-		current.setValue(newValue);
-		return val;
+	try{
+	    T val = null;
+	    LNode current = start;
+	    for(int i = 0;i < size;i++){
+		if (i == index){
+		    val = current.getValue();
+		    current.setValue(newValue);
+		    return val;
+		}
+		current = current.getNext();
 	    }
-	    current = current.getNext();
+	    return val;
+	} catch(IndexOutOfBoundsException e){
+	    System.out.println("Index out of bound");
 	}
-	return val;
     }
 
     //return the number of elements in the list
@@ -40,53 +49,65 @@ public class MyLinkedList<T>{
 
     //remove the element at the specified index, returns the value removed
     private T remove(int index){
-	T val = null;
-	if (index == 0 && size > 0){
-	    val = start.getValue();
-	    start = start.getNext();  
-	} else if (index > 0 && index < size){
-	    LNode current = start;
-	    for(int i = 0;i < index-1;i++){
-		current = current.getNext();
+	try{
+	    T val = null;
+	    if (index == 0 && size > 0){
+		val = start.getValue();
+		start = start.getNext();  
+	    } else if (index > 0 && index < size){
+		LNode current = start;
+		for(int i = 0;i < index-1;i++){
+		    current = current.getNext();
+		}
+		val = current.getNext().getValue();
+		current.setNext(current.getNext().getNext());
+		if (index == size-1){
+		    end = current;
+		}
 	    }
-	    val = current.getNext().getValue();
-	    current.setNext(current.getNext().getNext());
-	    if (index == size-1){
-		end = current;
-	    }
+	    size--;
+	    return val;
+	} catch(IndexOutOfBoundsException e){
+	    System.out.println("Index out of bound");
 	}
-	size--;
-	return val;
     }
 
     //insert a new elmeent at the specified index, 0 at the front, size() at the end.
     private boolean add(int index, T value){
-	if (index == 0){
-	    start = new LNode(value,start);
-	} else if (index > 0 && index < size){
-	    LNode current = start;
-	    for(int i = 0;i < index-1;i++){
-		current = current.getNext();
+	try{
+	    if (index == 0){
+		start = new LNode(value,start);
+	    } else if (index > 0 && index < size){
+		LNode current = start;
+		for(int i = 0;i < index-1;i++){
+		    current = current.getNext();
+		}
+		current.setNext(new LNode(value,current.getNext()));
+	    } else {
+		return add(value);
 	    }
-	    current.setNext(new LNode(value,current.getNext()));
-	} else {
-	    return add(value);
+	    size++;
+	    return true;
+	} catch(IndexOutOfBoundsException e){
+	    System.out.println("Index out of bound");
 	}
-	size++;
-	return true;
     }
 
     //adds to end
     private boolean add(T value){
-	if (size == 0){
-	    start = new LNode(value);
-	    end = start;
-	} else {
-	    end.setNext(new LNode(value));
-	    end = end.getNext();
+	try{
+	    if (size == 0){
+		start = new LNode(value);
+		end = start;
+	    } else {
+		end.setNext(new LNode(value));
+		end = end.getNext();
+	    }
+	    size++;
+	    return true;
+	} catch(IndexOutOfBoundsException e){
+	    System.out.println("Index out of bound");
 	}
-	size++;
-	return true;
     }
 
     //returns the index of the 1st occurrence of the value in the linked list, -1 if not found.
