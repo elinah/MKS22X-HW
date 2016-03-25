@@ -171,20 +171,17 @@ public class MyLinkedList<T> implements Iterable<T>{
     }
 
     public class LLIterator implements Iterator<T>{
-	private LNode current = start;
+	private LNode next = start;
 
 	public boolean hasNext(){
-	    if (current != null && current.getNext() != null){
-		return true;
-	    } else {
-		return false;
-	    }
+	    return next != null;
 	}
-
+	
 	public T next(){
 	    if (hasNext()){
-		current = current.getNext();
-		return current.getValue();
+		T val = next.getValue();
+		next = next.getNext();
+		return val;
 	    } else {
 		throw new NoSuchElementException();
 	    }
@@ -217,11 +214,12 @@ public class MyLinkedList<T> implements Iterable<T>{
 	a.remove(2);
 	System.out.println(a);
 	MyLinkedList<Integer> b = new MyLinkedList<Integer>();
-	b.add(new Integer(5));
+	for(int i = 0;i < 10;i++)
+	    b.add(i);
 	System.out.println(b);
-	Iterator<String> test = a.iterator();
-	while (test.hasNext()){
-	    System.out.println(test.next());
-        }
+	for(String x : a)
+	    System.out.println(x);
+	for(Integer x : b)
+	    System.out.print(x + " ");
     }
 }
