@@ -1,36 +1,38 @@
 public class ParenDemo{
-    
-    private MyStack<String> data = new MyStack<String>();
 
     public static boolean isMatching(String s){
+	MyStack<String> data = new MyStack<String>();
 	for(int i = 0;i < s.length();i++){
 	    if(s.substring(i,i+1).equals("(") || s.substring(i,i+1).equals("[") || s.substring(i,i+1).equals("{") || s.substring(i,i+1).equals("<")){
 		data.push(s.substring(i,i+1));
 	    } else if(s.substring(i,i+1).equals(")")){
-		if (data.pop().equals("(")){
-		    data.remove();
+		if (!data.isEmpty() && data.peek().equals("(")){
+		    data.pop();
 		} else {
 		    return false;
 		}
 	    } else if(s.substring(i,i+1).equals("]")){
-		if (data.pop().equals("[")){
-		    data.remove();
+		if (!data.isEmpty() && data.peek().equals("[")){
+		    data.pop();
 		} else {
 		    return false;
 		}
-	    } else if(s.substring(i,i+1).equals("}")){
-		if (data.pop().equals("{")){
-		    data.remove();
+	    } else if(!data.isEmpty() && s.substring(i,i+1).equals("}")){
+		if (data.peek().equals("{")){
+		    data.pop();
 		} else {
 		    return false;
 		}
-	    } else if(s.substring(i,i+1).equals(">")){
-		if (data.pop().equals(">")){
-		    data.remove();
+	    } else if(!data.isEmpty() && s.substring(i,i+1).equals(">")){
+		if (data.peek().equals("<")){
+		    data.pop();
 		} else {
 		    return false;
 		}
 	    }
+	}
+	if (data.size() > 0){
+	    return false;
 	}
 	return true;
     }
