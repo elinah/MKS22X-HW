@@ -45,13 +45,22 @@ public class MyStack<T>{
 	return size() == 0;
     }
 
+    public String toString(){
+	return l.toString();
+    }
+
     public static void main(String[] args){
 	MyStack<Integer> s = new MyStack<Integer>();
+	System.out.println(s.toString());
 	s.push(3);
+	System.out.println(s.toString());
 	s.push(87);
+	System.out.println(s.toString());
 	s.push(59);
+	System.out.println(s.toString());
 	System.out.println(s.pop());
 	System.out.println(s.pop());
 	System.out.println(s.peek());
+	System.out.println(s.toString());
     }
 }
