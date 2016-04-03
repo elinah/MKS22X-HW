@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class MyDeque<T>{
     
     private T[] data;
@@ -72,6 +74,40 @@ public class MyDeque<T>{
 	}
 	size++;
     }
+
+    public T removeFirst(){
+	if (size == 0){
+	    throw new NoSuchElementException();
+	} else {
+	    T val = data[start];
+	    data[start] = null;
+	    if (start == data.length-1){
+		start = 0;
+	    } else {
+		start++;
+	    }
+	    size--;
+	    System.out.println("Start: "+start);
+	    return val;
+	}
+    }
+
+    public T removeLast(){
+	if (size == 0){
+	    throw new NoSuchElementException();
+	} else {
+	    T val = data[end];
+	    data[end] = null;
+	    if (end == 0){
+		end = data.length-1;
+	    } else {
+		end--;
+	    }
+	    size--;
+	    System.out.println("End: "+end);
+	    return val;
+	}
+    }
     
     public static void main(String[] args){
 	MyDeque<String> a = new MyDeque<String>();
@@ -85,7 +121,7 @@ public class MyDeque<T>{
 	for (int i = 3;i < 10;i++)
 	    a.addFirst(""+i);
 	System.out.println(a.toString());
-	a.addFirst("FIRST");
+	/*a.addFirst("FIRST");
 	System.out.println(a.toString());
 	a.addLast("last");
 	System.out.println(a.toString());
@@ -95,6 +131,14 @@ public class MyDeque<T>{
 	    a.addLast(i+10+"");
 	System.out.println(a.toString());
 	a.addLast("L A S T");
+	System.out.println(a.toString());*/
+	System.out.println(a.removeFirst());
+	System.out.println(a.toString());
+	System.out.println(a.removeLast());
+        System.out.println(a.toString());
+	a.addLast("L");
+	System.out.println(a.toString());
+	a.addFirst("F");
 	System.out.println(a.toString());
     }
 }
