@@ -108,6 +108,22 @@ public class MyDeque<T>{
 	    return val;
 	}
     }
+
+    public T getFirst(){
+	if (size == 0){
+	    throw new NoSuchElementException();
+	} else {
+	    return data[start];
+	}
+    }
+
+    public T getLast(){
+	if (size == 0){
+	    throw new NoSuchElementException();
+	} else {
+	    return data[end];
+	}
+    }
     
     public static void main(String[] args){
 	MyDeque<String> a = new MyDeque<String>();
@@ -140,5 +156,7 @@ public class MyDeque<T>{
 	System.out.println(a.toString());
 	a.addFirst("F");
 	System.out.println(a.toString());
+	System.out.println(a.getFirst());
+	System.out.println(a.getLast());
     }
 }
