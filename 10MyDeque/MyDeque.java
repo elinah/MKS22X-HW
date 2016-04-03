@@ -11,17 +11,17 @@ public class MyDeque<T>{
     @SuppressWarnings("unchecked")
     private void grow(){
 	T[] retAr = (T[]) new Object[data.length*2];
+	int j = 0;
 	for(int i = 0;i < data.length;i++){
 	    if (i + start < data.length){
 		retAr[i] = data[i+start];
 	    } else {
-		int j = 0;
 		retAr[i] = data[j];
 		j++;
 	    }
 	}
 	start = 0;
-	end = data.length;
+	end = data.length-1;
 	data = retAr;
     }
 
@@ -54,7 +54,23 @@ public class MyDeque<T>{
     }
 
     public void addLast(T value){
-	
+	if (size == 0){
+	    data[0] = value;
+	    start = 0;
+	    end = 0;
+	} else {
+	    if (size == data.length){
+		grow();
+	    }
+	    if (end != data.length-1){
+		data[end+1] = value;
+		end = end+1;
+	    } else {
+		data[0] = value;
+		end = 0;
+	    }
+	}
+	size++;
     }
     
     public static void main(String[] args){
@@ -65,6 +81,20 @@ public class MyDeque<T>{
 	a.addFirst("b");
 	System.out.println(a.toString());
 	a.addFirst("c");
+	System.out.println(a.toString());
+	for (int i = 3;i < 10;i++)
+	    a.addFirst(""+i);
+	System.out.println(a.toString());
+	a.addFirst("FIRST");
+	System.out.println(a.toString());
+	a.addLast("last");
+	System.out.println(a.toString());
+	a.addLast("LAST");
+	System.out.println(a.toString());
+	for (int i = 0;i < 7;i++)
+	    a.addLast(i+10+"");
+	System.out.println(a.toString());
+	a.addLast("L A S T");
 	System.out.println(a.toString());
     }
 }
