@@ -1,7 +1,7 @@
 public class MyDeque<T>{
     
     private T[] data;
-    private int start, end;
+    private int start, end, size;
 
     @SuppressWarnings("unchecked")
     public MyDeque(){
@@ -20,6 +20,8 @@ public class MyDeque<T>{
 		j++;
 	    }
 	}
+	start = 0;
+	end = data.length;
 	data = retAr;
     }
 
@@ -31,10 +33,38 @@ public class MyDeque<T>{
 	return retSt;
     }
 
+    public void addFirst(T value){
+	if (size == 0){
+	    data[0] = value;
+	    start = 0;
+	    end = 0;
+	} else {
+	    if (size == data.length){
+		grow();
+	    }
+	    if (start != 0){
+		data[start-1] = value;
+		start = start-1;
+	    } else {
+		data[data.length-1] = value;
+		start = data.length-1;
+	    }
+	}
+	size++;
+    }
+
+    public void addLast(T value){
+	
+    }
+    
     public static void main(String[] args){
 	MyDeque<String> a = new MyDeque<String>();
 	System.out.println(a.toString());
-	a.grow();
+	a.addFirst("a");
+	System.out.println(a.toString());
+	a.addFirst("b");
+	System.out.println(a.toString());
+	a.addFirst("c");
 	System.out.println(a.toString());
     }
 }
