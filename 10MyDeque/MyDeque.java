@@ -87,7 +87,6 @@ public class MyDeque<T>{
 		start++;
 	    }
 	    size--;
-	    System.out.println("Start: "+start);
 	    return val;
 	}
     }
@@ -104,7 +103,6 @@ public class MyDeque<T>{
 		end--;
 	    }
 	    size--;
-	    System.out.println("End: "+end);
 	    return val;
 	}
     }
@@ -123,6 +121,14 @@ public class MyDeque<T>{
 	} else {
 	    return data[end];
 	}
+    }
+
+    public int size(){
+	return size;
+    }
+    
+    public boolean isEmpty(){
+	return size() == 0;
     }
     
     public static void main(String[] args){
