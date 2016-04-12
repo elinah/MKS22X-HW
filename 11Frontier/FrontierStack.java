@@ -8,7 +8,7 @@ public class FrontierStack<T> implements Frontier<T>{
 	data.push(element);
     }
     public T next(){
-	return data.peek();
+	return data.pop();
     }
     
     public boolean hasNext(){
