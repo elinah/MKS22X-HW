@@ -3,8 +3,8 @@ import java.io.*;
 
 public class BetterMaze{
     private class Node{
-	int[] location;
-	Node prev;
+	private int[] location;
+	private Node prev;
 	
 	private Node(int x,int y,Node prev){
 	    location = new int[2];
@@ -27,7 +27,8 @@ public class BetterMaze{
     private int      startRow,startCol;
     private Frontier<Node> placesToGo;
     private boolean  animate;//default to false
-
+    private boolean solved = false;
+    
     /**return a COPY of solution.
      *This should be : [x1,y1,x2,y2,x3,y3...]
      *the coordinates of the solution from start to end.
@@ -38,9 +39,14 @@ public class BetterMaze{
      **/
     public int[] solutionCoordinates(){
         /** IMPLEMENT THIS **/
-	int[] copy = new int[solution.length];
-	for (int i = 0;i < solution.length;i++){
-	    copy[i] = solution[i];
+	int[] copy;
+	if (solved){
+	    copy = new int[solution.length];
+	    for (int i = 0;i < solution.length;i++){
+		copy[i] = solution[i];
+	    }
+	} else {
+	    copy = new int[0];
 	}
 	return copy;
     }    
@@ -68,20 +74,24 @@ public class BetterMaze{
     **/
     private boolean solve(){  
         /** IMPLEMENT THIS **/
+	Node next;
 	if (startRow < maze.length && startCol < maze[0].length &&
 	    maze[startRow][startCol] == 'S'){
 	    placesToGo.add(new Node(startRow,startCol,null));
 	    maze[startRow][startCol] = '.';
 	}
+	
 	while (placesToGo.hasNext()){
-	    Node next = placesToGo.next();
+	    next = placesToGo.next();
 	    int[] loc = next.getValue();
 	    if (loc[0]+1 < maze.length){
 		if (maze[loc[0]+1][loc[1]] == ' '){
 		    placesToGo.add(new Node(loc[0]+1,loc[1],next));
 		    maze[loc[0]+1][loc[1]] = '.';
 		} else if (maze[loc[0]+1][loc[1]] == 'E'){
-		    return toCoordinates(loc[0]+1,loc[1],next);
+		    toCoordinates(loc[0]+1,loc[1],next);
+		    solved = true;
+		    return true;
 		}
 	    }
 	    if (loc[0]-1 > 0){
@@ -89,7 +99,9 @@ public class BetterMaze{
 		    placesToGo.add(new Node(loc[0]-1,loc[1],next));
 		    maze[loc[0]-1][loc[1]] = '.';
 		} else if (maze[loc[0]-1][loc[1]] == 'E'){
-		    return toCoordinates(loc[0]-1,loc[1],next);
+		    toCoordinates(loc[0]-1,loc[1],next);
+		    solved = true;
+		    return true;
 		}
 	    }
 	    if (loc[1]+1 < maze[0].length){
@@ -97,7 +109,9 @@ public class BetterMaze{
 		    placesToGo.add(new Node(loc[0],loc[1]+1,next));
 		    maze[loc[0]][loc[1]+1] = '.';
 		} else if (maze[loc[0]][loc[1]+1] == 'E'){
-		    return toCoordinates(loc[0],loc[1]+1,next);
+		    toCoordinates(loc[0],loc[1]+1,next);
+		    solved = true;
+		    return true;
 		}
 	    }
 	    if (loc[1]-1 > 0){
@@ -105,39 +119,34 @@ public class BetterMaze{
 		    placesToGo.add(new Node(loc[0],loc[1]-1,next));
 		    maze[loc[0]][loc[1]-1] = '.';
 		} else if (maze[loc[0]][loc[1]-1] == 'E'){
-		    return toCoordinates(loc[0],loc[1]-1,next);
+		    toCoordinates(loc[0],loc[1]-1,next);
+		    solved = true;
+		    return true;
 		}
 	    }
 	}	
 	return false;
     }
 
-    private boolean toCoordinates(int x,int y,Node path){
+    private void toCoordinates(int x,int y,Node path){
 	int n = 2;
-	while (path.getPrev() != null){
-	    n++;
+	Node temp = path;
+	while (temp != null){
+	    n += 2;
+	    temp = temp.getPrev();
 	}
 	solution = new int[n];
-	System.out.println("X: "+x);
-	System.out.println("STARTR: "+startRow);
-	System.out.println("Y: "+y);
-	System.out.println("STARTC: "+startCol);
-	solution[0] = x;
-	solution[1] = y;
-	solution[2] = path.getValue()[0];
-	solution[3] = path.getValue()[1];
-	int i = 4;
-	if (solution.length > 4){
-	    while (path.getPrev() != null){
-		path = path.getPrev();
-		System.out.println("I: "+solution[i]);
-		solution[i] = path.getValue()[0];
-		solution[i+1] = path.getValue()[1];
-		i = i + 2;
-	    }
+	solution[n-1] = x;
+	solution[n-2] = y;
+	int i = n - 3;
+	while (path != null){
+	    solution[i] = path.getValue()[0];
+	    solution[i-1] = path.getValue()[1];
+	    i -= 2;
+	    path = path.getPrev();
 	}
-	return true;
     }
+
      
     /**mutator for the animate variable  **/
     public void setAnimate(boolean b){  
@@ -241,9 +250,9 @@ public class BetterMaze{
 	}
     } 
     
-
+    
     public static void main(String[] args){
-	BetterMaze a = new BetterMaze("data1.dat");
+	BetterMaze a = new BetterMaze("data2.dat");
 	a.solveDFS();
 	System.out.println(Arrays.toString(a.solutionCoordinates()));
     }
