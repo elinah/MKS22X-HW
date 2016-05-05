@@ -45,7 +45,7 @@ public class BSTree<T extends Comparable<T>>{
 	    return Math.max(1 + leftH, 1 + rightH);
 	}
 	public void add(T value){
-	    if(value.compareTo(data) < 0){
+	    if (value.compareTo(data) < 0){
 		if (left == null)
 		    left = new Node(value);
 		else
@@ -70,9 +70,20 @@ public class BSTree<T extends Comparable<T>>{
 	    return retSt;
 	}
 	public boolean contains(T value){
-	    return false;
+	    if (value.compareTo(data) == 0)
+		return true;
+	    else if (value.compareTo(data) < 0){
+		if (left == null)
+		    return false;
+		else
+		    return left.contains(value);
+	    } else {
+		if (right == null)
+		    return false;
+		else
+		    return right.contains(value);
+	    }
 	}
-    
     }
 
     private Node root;
@@ -101,11 +112,14 @@ public class BSTree<T extends Comparable<T>>{
     }
     public boolean contains(T value){
 	//check for empty before you do things with root.
-	return false;
+	if (root == null)
+	    return false;
+	return root.contains(value);
     }
 
     public static void main(String[] args){
 	BSTree<Integer> b = new BSTree<Integer>();
+	System.out.println("Int tree:");
 	System.out.println(b.getHeight());
 	b.add(5);
 	System.out.println(b);
@@ -122,5 +136,38 @@ public class BSTree<T extends Comparable<T>>{
 	b.add(1);
 	System.out.println(b);
 	System.out.println(b.getHeight());
+	System.out.println(b.contains(5));
+	System.out.println(b.contains(3));
+	System.out.println(b.contains(7));
+	System.out.println(b.contains(2));
+	System.out.println(b.contains(1));
+	System.out.println(b.contains(11));
+	System.out.println(b.contains(0));
+	System.out.println();
+	BSTree<String> bs = new BSTree<String>();
+	System.out.println("String tree:");
+	System.out.println(bs.getHeight());
+	bs.add("n");
+	System.out.println(bs);
+	System.out.println(bs.getHeight());
+	bs.add("l");
+	System.out.println(bs);
+	System.out.println(bs.getHeight());
+	bs.add("p");
+	System.out.println(bs);
+	System.out.println(bs.getHeight());
+	bs.add("q");
+	System.out.println(bs);
+	System.out.println(bs.getHeight());
+	bs.add("s");
+	System.out.println(bs);
+	System.out.println(bs.getHeight());
+	System.out.println(bs.contains("n"));
+	System.out.println(bs.contains("l"));
+	System.out.println(bs.contains("p"));
+	System.out.println(bs.contains("q"));
+	System.out.println(bs.contains("s"));
+	System.out.println(bs.contains("z"));
+	System.out.println(bs.contains("a"));
     }
 }
