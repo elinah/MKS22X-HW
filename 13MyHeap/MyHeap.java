@@ -60,11 +60,18 @@ public class MyHeap<T extends Comparable<T>>
 	    pushDown(i);
     }
     public T delete(){
+	if (size == 0)
+	    throw new NoSuchElementException();
 	T ret = data[1];
 	data[1] = data[size];
 	size--;
 	pushDown(1);
 	return ret;
+    }
+    public T peek(){
+	if (size == 0)
+	    throw new NoSuchElementException();
+	return data[1];
     }
     public void add(T x){
 	if (size+1 >= data.length)
@@ -98,6 +105,20 @@ public class MyHeap<T extends Comparable<T>>
 	System.out.println(a.toString());
 	a.add("D");
 	System.out.println(a.toString());
+	System.out.println(a.peek());
+	MyHeap<Integer> b = new MyHeap<Integer>(false);
+	b.add(5);
+	System.out.println(b.toString());
+	b.add(3);
+	b.add(4);
+	System.out.println(b.toString());
+	b.add(7);
+	b.add(1);
+	System.out.println(b.toString());
+	System.out.println(b.delete());
+	System.out.println(b.toString());
+	System.out.println(b.peek());
+	System.out.println(b.toString());
     }
 	
 }
