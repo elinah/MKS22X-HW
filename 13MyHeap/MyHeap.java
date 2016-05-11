@@ -13,7 +13,7 @@ public class MyHeap<T extends Comparable<T>>
         this(array,true);
     }
     public MyHeap(boolean isMax){
-	isMax = this.isMax;
+	this.isMax = isMax;
 	size = 0;
 	data = (T[])new Comparable[2];
     }
